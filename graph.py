@@ -60,10 +60,39 @@ class Graph:
                 if not visited[neighbour.dest]:
                     queue.append(neighbour.dest)
 
+    def biDirEdge(self,src,dest,wt=1):
+        self.addEdge(src,dest,wt)
+        self.addEdge(dest,src,wt)
+
+    def ConnectedComponents(self):
+        count = 0
+        component = [0]*self.N
+        visitedList = [False]*self.N
+        res = self.ConnectedUtil(count,component,visitedList)
+        print("\n")
+        print(res[0])
+        print(res[1])
+        print("\n")
+
+
+    def ConnectedUtil(self,count,component,visited):
+        for i in range(self.N):
+            if not visited[i]:
+                count += 1
+                self.ConnectedDFSUtil(i,count,component,visited)
+        return (count,component)
+
+    def ConnectedDFSUtil(self,src,count,component,visited):
+        visited[src] = True
+        component[src] = count
+        print(src,end=" -> ")
+        for neighbour in self.AdjList[src].neighbours:
+            if not visited[neighbour.dest]:
+                self.ConnectedDFSUtil(neighbour.dest,count,component,visited)
 
 
 def main():
-    g = Graph(4)
+    # g = Graph(4)
     # DFS
     # g.addEdge(0,1)
     # g.addEdge(0,2)
@@ -82,6 +111,15 @@ def main():
     # g.addEdge(2, 3)
     # g.addEdge(3, 3)
     # g.printGraph()
-    # g.BFS(2) # 2 0 3 1 
+    # g.BFS(2) # 2 0 3 1
+
+    # Connected Components for Un Dir Graph
+    # g = Graph(5)
+    # g.biDirEdge(1, 0)
+    # g.biDirEdge(2, 3)
+    # g.biDirEdge(3, 4)
+    # g.printGraph()
+    # g.ConnectedComponents()
+
 
 main()
