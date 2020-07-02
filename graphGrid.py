@@ -1,8 +1,8 @@
 
-import random as r
+import random as rand
 
 def isValidMove(r,c,R,C,grid):
-    return r < R and r >= 0 and c >= 0 and c < C and grid[r][c] == 0
+    return (r < R and r >= 0 )and (c >= 0 and c < C) and grid[r][c] == 0
 
 def BFS(r,c,R,C,grid):
     gridVisited = [[0 for j in range(C)] for i in range(R)]
@@ -13,17 +13,15 @@ def BFS(r,c,R,C,grid):
     QueueR.append(r)
     QueueC.append(c)
 
+    gridVisited[r][c] = 1
 
     while(len(QueueC) != 0):
 
         r0 = QueueR[0]
         c0 = QueueC[0]
-        grid[r0][c0] = 2
-        gridVisited[r0][c0] = 1
-        print("Dequeuing ..")
-        printGrid(grid)
 
-        # print(r0,c0,end="..\n")
+        grid[r0][c0] = 2 # marking on the grid
+
         del QueueR[0]
         del QueueC[0]
 
@@ -37,14 +35,12 @@ def BFS(r,c,R,C,grid):
                     c += dc[i]
                     QueueR.append(r)
                     QueueC.append(c)
-                    grid[r][c] = 2
-                    print("Attempting ..")
-                    printGrid(grid)
-                    grid[r][c] = 0
+                    gridVisited[r][c] = 1
+
 
 
     print("\nSolution")
-    printGrid(grid)
+    printGrid(gridVisited)
 
 def printGrid(grid):
     print("\n")
@@ -54,10 +50,13 @@ def printGrid(grid):
 
 def main():
     N = 5
-    grid = [[ int(r.random()*2) for j in range(N)] for i in range(N)]
+    grid = [[ int(rand.random()*0) for j in range(N)] for i in range(N)]
 
     grid[1][2] = 0
     printGrid(grid)
     BFS(1,2,N,N,grid)
+
+    printGrid(grid)
+
 
 main()
