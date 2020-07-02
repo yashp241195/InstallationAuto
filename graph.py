@@ -106,6 +106,25 @@ class Graph:
                 self.topologicalUtil(neighbour.dest,visited,result)
         result.append(src)            
 
+    def shortestPath(self,s):
+        topsort = self.topological()
+        print(topsort)
+
+        dist = [float("Inf")] * (self.N)
+        dist[s] = 0
+
+        stack = topsort
+
+        while len(stack)!=0 :
+            cur = stack[0]
+            del stack[0]
+            if dist[cur] != float("Inf"):
+                for neighbour in self.adjList[cur].neighbours:
+                    if dist[neighbour.dest] > dist[cur] + neighbour.wt:
+                        dist[neighbour.dest] = dist[cur] + neighbour.wt
+        print(dist) 
+        
+        
 def main():
     # g = Graph(4)
     # DFS
@@ -146,6 +165,23 @@ def main():
     # g.addEdge(3, 1);
     # print("Topological")
     # g.topological()
+    
+    # Shortest Path
+    # g = Graph(6)
+
+    # g.addEdge(0, 1, 5)
+    # g.addEdge(0, 2, 3)
+    # g.addEdge(1, 3, 6)
+    # g.addEdge(1, 2, 2)
+    # g.addEdge(2, 4, 4)
+    # g.addEdge(2, 5, 2)
+    # g.addEdge(2, 3, 7)
+    # g.addEdge(3, 4, -1)
+    # g.addEdge(4, 5, -2)
+
+    # print("Topological Shortest Path")
+    # s = 1
+    # g.shortestPath(s)
 
 
 main()
