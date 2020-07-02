@@ -90,6 +90,21 @@ class Graph:
             if not visited[neighbour.dest]:
                 self.ConnectedDFSUtil(neighbour.dest,count,component,visited)
 
+    def topological(self):
+        result = []
+        visited = [False for i in range(self.N)]
+
+        for i in range(self.N):
+            if not visited[i]:
+                self.topologicalUtil(i,visited,result)
+        print(list(reversed(result)))
+
+    def topologicalUtil(self,src,visited,result):
+        visited[src] = True
+        for neighbour in self.adjList[src].neighbours:
+            if visited[neighbour.dest] == False:
+                self.topologicalUtil(neighbour.dest,visited,result)
+        result.append(src)            
 
 def main():
     # g = Graph(4)
@@ -120,6 +135,17 @@ def main():
     # g.biDirEdge(3, 4)
     # g.printGraph()
     # g.ConnectedComponents()
+    
+    # topological ordering    
+    # g = Graph(6)
+    # g.addEdge(5, 2);
+    # g.addEdge(5, 0);
+    # g.addEdge(4, 0);
+    # g.addEdge(4, 1);
+    # g.addEdge(2, 3);
+    # g.addEdge(3, 1);
+    # print("Topological")
+    # g.topological()
 
 
 main()
