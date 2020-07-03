@@ -1,3 +1,4 @@
+
 import os
 
 class Node:
@@ -40,7 +41,9 @@ class Graph:
 def scriptcreatenew(cmd):
     try:
         size = len(cmd)
-        os.system("mkdir scripts")
+        if not(os.path.exists(os.getcwd()+"/scripts")):
+            os.system("mkdir scripts")
+        
         for i in range(size):
             make_bash_file(cmd[i])
     except Exception as e:
@@ -50,7 +53,10 @@ def scriptcreatenew(cmd):
 
 def make_bash_file(name):
     try:
-        os.system("touch scripts/"+name)
+        if(os.path.exists(os.getcwd()+"/scripts/"+name)):
+            print(name," already exists")
+            return
+
         os.system("echo 'echo Hello "+name+"' > scripts/"+name)
         print("file : ",name," created")
     except Exception as e:
@@ -72,7 +78,7 @@ def main():
     g = Graph(size)
 
     # create the script folder
-    # scriptcreatenew(cmd)
+    scriptcreatenew(cmd)
 
     cmdMap = {}
     for i in range(size):
